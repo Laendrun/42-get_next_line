@@ -31,9 +31,12 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left_c[fd]);
+		if (fd >= 0)
+		{
+			free(left_c[fd]);
+			left_c[fd] = NULL;
+		}
 		free(buffer);
-		left_c[fd] = NULL;
 		buffer = NULL;
 		return (0);
 	}
